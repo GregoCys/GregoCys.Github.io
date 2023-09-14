@@ -1,17 +1,18 @@
 @charset "utf-8";
+@import url("js/jquery-3.4.1.min.js.css");
 /* CSS Document */
 
 body {
   color: white;
   margin: 0;
   padding: 0;
-  background-image: url("premium/color_variations/black_logo_on_white.png"); 
+  background-image: url("premium/color_variations/white_logo_on_black.png"); 
   background-position: center;
   background-attachment: fixed;
 }
 
 .transparent-bg {
-  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+  background: rgba(0, 0, 0, 0.7); 
 }
 
 .container {
@@ -20,4 +21,16 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
+}
+
+
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #343A40;
+  color: white;
+  text-align: center;
+	height: 25px;
 }

@@ -2558,8 +2558,10 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: green;
+  border-color: darkgreen;
+  border-bottom-width: thick;
+	
 }
 
 .btn-primary:hover {
@@ -5243,8 +5245,8 @@ a.badge-dark:focus, a.badge-dark.focus {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-color: #e9ecef;
-  border-radius: 0.3rem;
+  background-color: rgba(0,0,0,0.90);
+  border-radius: 0.5rem;
 }
 
 @media (min-width: 576px) {
