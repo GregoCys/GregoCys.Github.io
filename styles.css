@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+  color: white;
+  margin: 0;
+  padding: 0;
+  background-image: url("premium/color_variations/black_logo_on_white.png"); 
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.transparent-bg {
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
