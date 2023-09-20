@@ -4,7 +4,7 @@
 
 body {
   color: white;
-  margin: 0;
+  margin: 0px 0px 25px;
   padding: 0;
   background-image: url("premium/color_variations/white_logo_on_black.png"); 
   background-position: center;
@@ -34,3 +34,4 @@ body {
   text-align: center;
 	height: 25px;
 }
+
