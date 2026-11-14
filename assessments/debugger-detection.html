@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Analyzed a protected console executable using breakpoints, decompilation, and runtime state inspection.">
+<meta name="theme-color" content="#0b1220">
+<title>Debugger Detection &amp; Challenge–Response Analysis | GregoCys</title>
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+<header class="site-header"><div class="shell navwrap">
+<a href="../index.html" class="wordmark" aria-label="GregoCys home"><span class="mark">◈</span> Grego<span>Cys</span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Toggle navigation">☰</button>
+<nav id="mainnav" class="navlinks" aria-label="Primary navigation">
+<a href="../index.html">Home</a><a href="../about.html">About</a><a href="../skills.html">Experience &amp; Skills</a><a href="../certifications.html">Certifications</a><a href="../portfolio.html" class="active">Projects</a><a href="../GregoGaurd.html">GregoGuard Research</a>
+</nav></div></header>
+<main id="main-content">
+<section class="page-hero shell">
+<a class="back" href="../portfolio.html">← Back to projects</a>
+<span class="eyebrow">TECHNICAL ASSESSMENT / SANITIZED RETROSPECTIVE</span>
+<h1>Debugger Detection &amp; Challenge–Response Analysis</h1>
+<p class="lead">Analyzed a protected console executable using breakpoints, decompilation, and runtime state inspection.</p>
+<div class="meta"><span>Windows Binary Analysis</span><span>Completed interview exercise</span><span>Third-party challenge</span></div>
+</section>
+<section class="section shell article">
+<div class="notice"><strong>Publication context.</strong> This article summarizes an independently completed technical interview exercise using original commentary. The challenge was provided by a third party; the exercise is not represented as my own product, a public vulnerability, or a commissioned professional engagement. Original company branding, challenge assets, flags, and step-by-step solution details have been omitted.</div>
+<h2>The problem</h2><p>The executable included an anti-debugging check and a challenge–response interaction that changed between attempts. Understanding the acceptance logic required observing how the program handled both the generated challenge and the submitted response.</p>
+<h2>Research methodology</h2><ol class="study-steps"><li>Located the debugger-detection path during initial static analysis and examined the relevant program states in x64dbg.</li><li>Observed the challenge–response workflow, including string handling and comparison functions.</li><li>Correlated runtime values with Ghidra’s pseudocode to explain the success path and verify the challenge result.</li></ol>
+<h2>Tools &amp; techniques</h2><div class="chips"><span>Ghidra</span><span>x64dbg</span></div>
+<h2>Result</h2><p>The original exercise documents successful completion through controlled debugging and analysis. Details sufficient to bypass the assessment are intentionally omitted from this public summary.</p>
+<h2>What I practiced</h2><p>Anti-analysis recognition, breakpoint strategy, runtime string tracing, and combining disassembly with observable behavior.</p>
+<div class="notice">A summary of a completed controlled assessment, not a disclosure of a third-party vulnerability. Results refer only to the exercise materials described.</div>
+<div class="actions"><a class="btn secondary" href="../portfolio.html">View other projects →</a><a class="btn secondary" href="../GregoGaurd.html">Explore GregoGuard →</a></div>
+</section>
+</main>
+<footer class="site-footer"><div class="shell foot-inner"><div><strong>GregoCys</strong><span class="sep">/</span>Cybersecurity • Research • Engineering<br><small>© 2026 GregoCys. Independently authored portfolio summary.</small></div><div class="footerlinks"><a href="../portfolio.html">Projects</a><a href="../index.html">Home</a></div></div></footer>
+<script src="../assets/site.js" defer></script>
+</body></html>
