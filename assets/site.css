@@ -32,3 +32,10 @@ h1,h2,h3,p,a,code{overflow-wrap:anywhere}
 .study-steps li::marker{color:var(--cyan);font-weight:700}
 .article .study-steps{max-width:850px}
 @media(max-width:760px){.study-steps{padding-left:1.2rem}}
+
+/* Reproducible CrackMe code samples */
+.code-sample{margin:22px 0;padding:18px 20px;border:1px solid var(--line);background:#08111d;border-radius:10px;overflow-x:auto;white-space:pre;line-height:1.6;font:13px/1.6 Consolas,'SFMono-Regular',monospace;color:#a5e7dd}
+.code-sample code{background:transparent;padding:0;border-radius:0;color:inherit;overflow-wrap:normal}
+.study-table-wrap{overflow-x:auto;margin:20px 0}
+.study-table-wrap .data-table{min-width:390px}
+.study-note{font-size:.9rem;color:var(--muted);border-left:2px solid var(--cyan);padding-left:16px}
