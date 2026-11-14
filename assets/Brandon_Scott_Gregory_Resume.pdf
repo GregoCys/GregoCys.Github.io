@@ -1,0 +1,103 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 4 0 R /F2 5 0 R >> >> /Contents 6 0 R >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+6 0 obj
+<< /Length 3691 >>
+stream
+0.08 0.16 0.25 rg
+40 765 532 2 re f
+0.07 0.22 0.32 rg
+BT /F2 21 Tf 45 755 Td (BRANDON SCOTT GREGORY) Tj ET
+0.02 0.43 0.50 rg
+BT /F2 12 Tf 45 723 Td (CYBERSECURITY ENGINEER) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 700 Td (gregocys.com  |  BrandonScott@GregoCys.com  |  github.com/GregoCys) Tj ET
+0.03 0.42 0.48 rg
+BT /F2 11 Tf 45 669 Td (PROFESSIONAL PROFILE) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 651 Td (Cybersecurity Engineer with experience in enterprise identity and endpoint security,) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 637 Td (application control, incident investigation, and policy validation. SANS Technology) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 623 Td (Institute graduate with a Bachelor of Science in Applied Cybersecurity.) Tj ET
+0.03 0.42 0.48 rg
+BT /F2 11 Tf 45 592 Td (PROFESSIONAL EXPERIENCE) Tj ET
+0.13 0.19 0.25 rg
+BT /F2 10 Tf 45 574 Td (Classic Collision - Cybersecurity Engineer | Dec 2023 - Present) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 557 Td (- Engineer Microsoft Entra ID, Conditional Access, Intune, Windows 365 and Group Policy controls.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 543 Td (- Investigate AppLocker policies, endpoint behavior, and CIS-aligned browser configuration.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 529 Td (- Analyze Microsoft Sentinel/Defender alerts, correlate KQL telemetry, and document findings.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 515 Td (- Develop PowerShell diagnostics, configuration checks, and repeatable troubleshooting.) Tj ET
+0.13 0.19 0.25 rg
+BT /F2 10 Tf 45 501 Td (DefendEdge - Tier 2 Counter Threat Intelligence Analyst | May - Nov 2023) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 484 Td (Counter-threat intelligence analysis, alert triage, and communication of findings.) Tj ET
+0.13 0.19 0.25 rg
+BT /F2 10 Tf 45 470 Td (United States Navy - Air Traffic Controller | Sep 2013 - Nov 2023) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 453 Td (High-reliability operations, situational awareness, coordination, and communication.) Tj ET
+0.13 0.19 0.25 rg
+BT /F2 10 Tf 45 439 Td (Northbeach - Network Administrator | Sep 2009 - Sep 2013) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 422 Td (Network and systems administration.) Tj ET
+0.03 0.42 0.48 rg
+BT /F2 11 Tf 45 391 Td (EDUCATION) Tj ET
+0.13 0.19 0.25 rg
+BT /F2 9 Tf 45 373 Td (SANS Technology Institute - Bachelor of Science in Applied Cybersecurity \(Graduated\)) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 359 Td (American Military University - additional computer science coursework.) Tj ET
+0.03 0.42 0.48 rg
+BT /F2 11 Tf 45 328 Td (SELECTED CERTIFICATIONS) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 310 Td (GIAC: GPEN, GMON, GCFA, GCIA, GPYC, GCIH, GSEC, GISF, GFACT.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 8 Tf 45 296 Td (Check current standing: credly.com/users/brandon-gregory.2acfa6a3/badges/credly) Tj ET
+0.03 0.42 0.48 rg
+BT /F2 11 Tf 45 265 Td (TECHNICAL SKILLS) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 247 Td (Identity and endpoint: Entra ID, Conditional Access, Intune, AppLocker, Group Policy.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 233 Td (Operations and research: Sentinel, Defender, KQL, Ghidra, x64dbg, Windows PE.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 219 Td (Development: PowerShell, Python, Git, virtual machines, C fundamentals.) Tj ET
+0.03 0.42 0.48 rg
+BT /F2 11 Tf 45 188 Td (SELECTED WORK) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 170 Td (Device-bound session policy planning; endpoint application control and browser hardening;) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 156 Td (incident investigations; GregoGuard binary analysis and parser memory-safety research.) Tj ET
+0.13 0.19 0.25 rg
+BT /F1 9 Tf 45 142 Td (Research portfolio: gregocys.com/portfolio.html) Tj ET
+endstream
+endobj
+xref
+0 7
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000251 00000 n 
+0000000321 00000 n 
+0000000396 00000 n 
+trailer
+<< /Size 7 /Root 1 0 R >>
+startxref
+4138
+%%EOF

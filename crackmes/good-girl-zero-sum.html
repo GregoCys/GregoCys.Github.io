@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b1220"><meta name="description" content="Translating decompiled integer-validation logic into a mathematical constraint and finding valid command-line arguments."><title>good-girl — Solving a Lookup-Table Validation CrackMe | GregoCys</title><link rel="icon" type="image/png" href="../favicon.png"><link rel="stylesheet" href="../assets/site.css"></head>
+<body><a class="skip-link" href="#main-content">Skip to content</a><header class="site-header"><div class="shell navwrap"><a href="../index.html" class="wordmark" aria-label="GregoCys home"><span class="mark">◈</span> Grego<span>Cys</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Toggle navigation">☰</button><nav id="mainnav" class="navlinks" aria-label="Primary navigation"><a href="../index.html">Home</a><a href="../about.html">About</a><a href="../skills.html">Experience &amp; Skills</a><a href="../certifications.html">Certifications</a><a href="../portfolio.html" class="active">Projects</a><a href="../GregoGaurd.html">GregoGuard Research</a></nav></div></header>
+<main id="main-content"><section class="page-hero shell"><a class="back" href="../portfolio.html">← Back to projects</a><span class="eyebrow">LINUX / CRACKME / PYTHON</span><h1>good-girl — Solving a Lookup-Table Validation CrackMe</h1><p class="lead">Translating decompiled integer-validation logic into a mathematical constraint and finding valid command-line arguments.</p><div class="meta"><span>August 13, 2025</span><span>Linux</span><span>Completed CrackMe</span></div></section>
+<section class="section shell article"><div class="notice">This case study documents my analysis of a standalone reverse-engineering challenge. The code, recovered conditions, and solution are included for educational reproducibility.</div>
+<h2>Objective</h2><p>The <code>good-girl</code> CrackMe prints either <code>good girl!</code> or <code>bad girl!</code>. The challenge was to determine the accepted argument format and find inputs that trigger the positive result.</p>
+<h2>Reconstructing the input model</h2><p>Ghidra analysis showed that the executable requires <strong>exactly eight integer arguments</strong> (so <code>argc == 9</code> when counting the program name). The eight numbers form four pairs of coordinates. Each coordinate is within the range 0 through 3 and selects an integer from a 4×4 lookup table.</p>
+<pre class="code-sample"><code>for each (x, y) pair:
+    sum += table[x * 4 + y]
+
+if sum == 0:
+    print("good girl!")
+else:
+    print("bad girl!")</code></pre>
+<h2>Recovered lookup table</h2><div class="study-table-wrap"><table class="data-table"><thead><tr><th>x \ y</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead><tbody>
+<tr><th>0</th><td>11</td><td>13</td><td>23</td><td>-7</td></tr>
+<tr><th>1</th><td>-27</td><td>107</td><td>-53</td><td>41</td></tr>
+<tr><th>2</th><td>67</td><td>-51</td><td>253</td><td>-143</td></tr>
+<tr><th>3</th><td>-119</td><td>101</td><td>401</td><td>-391</td></tr>
+</tbody></table></div>
+<h2>Manual solution</h2><p>I selected four coordinate pairs whose table entries sum to zero: <code>(0,0)</code>, <code>(0,2)</code>, <code>(0,3)</code>, and <code>(1,0)</code>. Their values satisfy:</p>
+<pre class="code-sample"><code>11 + 23 - 7 - 27 = 0</code></pre>
+<p>The command-line test documented in the report was:</p>
+<pre class="code-sample"><code>chmod +x good-girl
+./good-girl 0 0 0 2 0 3 1 0
+# good girl!</code></pre>
+<h2>Automating solution discovery</h2><p>With the constraint reconstructed, I wrote a Python utility to enumerate coordinate combinations, calculate the four selected table values, and report inputs for which the total equals zero. Its command-line interface supported checking a candidate and printing multiple valid solutions. The report documents a run displaying twenty example solutions.</p>
+<pre class="code-sample"><code>from itertools import product
+
+table = [11, 13, 23, -7,
+         -27, 107, -53, 41,
+         67, -51, 253, -143,
+         -119, 101, 401, -391]
+
+for coords in product(range(4), repeat=8):
+    total = sum(table[coords[i] * 4 + coords[i+1]]
+                for i in range(0, 8, 2))
+    if total == 0:
+        print(*coords)
+        break</code></pre>
+<h2>Outcome and takeaways</h2><p>The binary's acceptance rule was a deterministic zero-sum check over a fixed lookup table; no cryptographic key or remote dependency was involved. Reconstructing the validation algorithm made it possible to derive correct inputs manually and automate further searches without patching the executable.</p>
+<p class="study-note">Scope: standalone CrackMe analysis. This is a constraint-solving exercise, not evidence of a vulnerability in an unrelated product.</p><h2>Technical toolkit</h2><div class="chips"><span>Ghidra</span><span>Python 3.11</span><span>Linux shell</span><span>Combinatorial search</span></div><div class="actions"><a class="btn secondary" href="../portfolio.html">View projects →</a><a class="btn secondary" href="../GregoGaurd.html">GregoGuard research →</a></div></section></main>
+<footer class="site-footer"><div class="shell foot-inner"><div><strong>GregoCys</strong><span class="sep">/</span>Cybersecurity • Research • Engineering<br><small>© 2026 GregoCys. Independent reverse-engineering analysis.</small></div><div class="footerlinks"><a href="../index.html">Home</a><a href="../portfolio.html">Projects</a></div></div></footer><script src="../assets/site.js" defer></script></body></html>
