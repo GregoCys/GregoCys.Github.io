@@ -16,3 +16,12 @@ body{overflow-x:hidden}
 h1,h2,h3,p,a,code{overflow-wrap:anywhere}
 @media(max-width:980px){.verify-panel{flex-direction:column;align-items:flex-start}}
 @media(max-width:760px){.shell{width:calc(100% - 34px)}.verify-panel .actions{width:100%}.verify-panel .btn{max-width:100%;text-align:center}}
+
+/* Hierarchy for completed degree and additional education */
+.education-stack{display:grid;grid-template-columns:1fr;gap:16px;max-width:950px}
+.education-primary{border-color:#458b91;background:linear-gradient(110deg,#172b3e,#142238)}
+.education-primary h3{font-size:clamp(1.25rem,2vw,1.65rem)}
+.education-secondary{padding:18px 24px;opacity:.91;background:#101b2d}
+.education-secondary h3{font-size:1.05rem;margin:6px 0}
+.education-secondary p{font-size:.95rem;margin:0;max-width:750px}
+.education-secondary .eyebrow{font-size:.67rem}
