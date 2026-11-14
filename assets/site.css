@@ -39,3 +39,29 @@ h1,h2,h3,p,a,code{overflow-wrap:anywhere}
 .study-table-wrap{overflow-x:auto;margin:20px 0}
 .study-table-wrap .data-table{min-width:390px}
 .study-note{font-size:.9rem;color:var(--muted);border-left:2px solid var(--cyan);padding-left:16px}
+
+/* Portfolio information architecture */
+.portfolio-jump{display:flex;flex-wrap:wrap;gap:10px;padding:22px 0 4px}
+.portfolio-jump a{display:inline-flex;border:1px solid #4b7184;border-radius:100px;background:#15283b;padding:9px 15px;color:#d1ecf0;font-size:13px;font-weight:700}
+.portfolio-jump a:hover,.portfolio-jump a:focus-visible{background:#214057;color:#fff}
+section[id]{scroll-margin-top:90px}
+.credential{min-width:0;align-items:flex-start}
+.credential>div{min-width:0}
+.credential-verify{display:inline-block;margin-top:9px;font-size:12px;font-weight:700;color:#7ce3d9}
+.credential-verify:hover{text-decoration:underline}
+.skip-link{position:absolute;left:12px;top:-100px;background:#fff;color:#071521;padding:11px 16px;z-index:1000;border-radius:6px}
+.skip-link:focus{top:10px}
+button.btn{font-family:inherit;cursor:pointer}
+.resume-sheet{max-width:850px;margin:30px auto 85px;padding:50px;background:#fff;color:#1b2f40;border-radius:12px;box-shadow:0 18px 65px #01081188}
+.resume-header{border-bottom:3px solid #0b8592;padding-bottom:13px}
+.resume-header h1{font-size:32px;margin:0;color:#13293e}
+.resume-title{color:#096f7b;letter-spacing:.14em;font-size:12px;font-weight:800}
+.resume-sheet a{color:#006e82;text-decoration:underline}
+.resume-sheet h2{font-size:17px;color:#075d72;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #c7dade;padding-bottom:6px;margin:20px 0 11px}
+.resume-sheet h3{font-size:14px;color:#162a40;letter-spacing:0;margin:10px 0 5px}
+.resume-sheet h3 span{font-size:12px;font-weight:500}
+.resume-sheet p,.resume-sheet li{font-size:12px;line-height:1.55;margin:6px 0}
+.resume-sheet ul{padding-left:22px}
+@media(max-width:760px){.resume-sheet{margin:20px 12px 50px;padding:25px 20px}.resume-header h1{font-size:25px}.portfolio-jump{padding-bottom:15px}.credential{gap:12px;padding:16px}.credential-mark{flex-basis:56px;font-size:12px;min-height:48px}}
+@media(prefers-reduced-motion:reduce){.btn{transition:none}html{scroll-behavior:auto}}
+@media print{@page{size:letter;margin:.42in}body{background:#fff!important;color:#182b3b!important}.site-header,.site-footer,.no-print,.skip-link{display:none!important}.resume-sheet{box-shadow:none;border-radius:0;margin:0;padding:0;max-width:100%}.resume-sheet h2{break-after:avoid}.resume-sheet section{break-inside:avoid}.resume-header h1{font-size:25px}.resume-sheet p,.resume-sheet li{font-size:9px;line-height:1.3}.resume-sheet h2{margin:11px 0 5px;font-size:12px}.resume-sheet h3{margin:7px 0 3px;font-size:10px}.resume-sheet ul{margin:3px 0}.resume-sheet a{color:#182b3b!important}}
