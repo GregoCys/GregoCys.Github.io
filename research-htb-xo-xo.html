@@ -52,7 +52,7 @@
 <a class="back" href="GregoGaurd.html">← GregoGuard research</a>
 <span class="eyebrow">GREGO GUARD / HACK THE BOX / WEB SECURITY / COMPLETED</span>
 <h1>Hack The Box XO XO — From an Array Bug to XXE</h1>
-<p class="lead">A validated web challenge walkthrough chaining a skipped array-validation check with server-side XML external entity expansion. Full methodology; no flag disclosure.</p>
+<p class="lead">A source-code walkthrough showing how an array-validation bug and unsafe XML parsing led to server-side file disclosure in the HTB lab.</p>
 <div class="gg-article-meta"><span>Node.js / Express</span><span>libxmljs</span><span>CWE-611 · XXE</span><span>November 17, 2026</span></div>
 <div class="gg-method-ribbon"><span>Source review</span><span>Control-flow analysis</span><span>DTD injection</span><span>Live verification</span></div>
 <div class="actions"><a class="btn secondary" href="assets/htb_xo_xo_xxe_exploit.py" download="htb_xo_xo_xxe_exploit.py">Download proof-of-concept ↓</a><a class="btn secondary" href="GregoGaurd.html">All case studies</a></div>
@@ -411,7 +411,7 @@ for (const song of retainedSongs) {
 <p><strong>Weakness mapping:</strong> CWE-20 (validation bypass), CWE-611 (XXE), and CWE-200 (information exposure as demonstrated impact). The exact production severity depends on the files and permissions available to the parser process.</p>
 <h2 id="7-conclusion">7. Conclusion</h2>
 <p>XO XO illustrates how a small control-flow mistake in otherwise ordinary application logic can neutralize a security check. The missing validation would have been a data-integrity issue on its own. Combined with DTD string interpolation and external entity expansion, it became a server-side file-read vulnerability reachable by any registered user.</p>
-<p>The most useful lesson is architectural: <strong>validate complete input collections without mutation hazards, keep untrusted values out of markup syntax, and disable parser capabilities the application does not need.</strong> Each control blocks a different part of the chain.</p>
+<p>The design lesson is straightforward: <strong>validate complete input collections without mutation hazards, keep untrusted values out of markup syntax, and disable parser capabilities the application does not need.</strong> Each control blocks a different part of the chain.</p>
 <hr />
 <p><em>GregoGuard — independent security research and controlled challenge analysis. Source review and exploit validation performed within the authorized Hack The Box environment. Challenge flags and temporary credentials are intentionally excluded from this article.</em></p>
 

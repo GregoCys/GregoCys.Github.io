@@ -27,8 +27,8 @@
 <div>
 <p class="lab-crumbs"><a href="GregoGaurd.html">GregoGuard Research</a><span aria-hidden="true">/</span><span>Lab case study 03</span></p>
 <span class="lab-kicker">Hack The Box · Mini Pro Lab · Completed</span>
-<h1>Puppet.<br><span class="accent">Follow the evidence.</span></h1>
-<p class="lead">A completed, multi-stage red-team learning exercise across an enterprise-style Windows and Linux environment. This case study documents the skills practiced, investigation approach, and verified completion—without disclosing an active lab's solution.</p>
+<h1>Puppet.<br><span class="accent">Four objectives completed.</span></h1>
+<p class="lead">Notes from a four-objective red-team lab spanning Windows, Linux, and enterprise identity. The public version focuses on troubleshooting and what I verified, without publishing the solution.</p>
 <div class="meta"><span>17 November 2026</span><span>Windows + Linux</span><span>Active Directory</span><span>Authorized training</span></div>
 <div class="actions"><a class="btn primary" href="#overview">Read case study <span aria-hidden="true">↓</span></a><a class="btn secondary" href="portfolio.html">Other projects</a></div>
 </div>
@@ -44,10 +44,10 @@
 <section class="section shell lab-overview" id="overview">
 <div>
 <span class="eyebrow">01 / ENGAGEMENT OVERVIEW</span>
-<h2>Learning through an interconnected environment.</h2>
-<p>Puppet is a Hack The Box Mini Pro Lab focused on red-team operations in a simulated organization. The exercise provided an opportunity to practice systematic discovery, maintain an audit trail of observations, and validate findings across different operating systems and security contexts.</p>
-<p>My approach emphasized confirming what a tool actually accomplished rather than accepting a success message at face value. Each meaningful milestone was checked independently, and unexpected results were recorded as part of the investigation—not hidden from the final report.</p>
-<p>This page intentionally avoids the challenge's attack sequence, commands, host-specific weaknesses, credentials, and flags. Those details are retained in private study notes in line with HTB publication rules.</p>
+<h2>What I worked through</h2>
+<p>Puppet is a Hack The Box Mini Pro Lab set in a mixed Windows and Linux environment. I completed the four objectives while recording account context, command output, and differences between expected and observed behavior.</p>
+<p>One Windows-side test reported success, but the expected account change did not occur. I checked the resulting files and system logs rather than treating the tool message as proof. That same habit helped when configuration paths and process privileges differed from my initial assumptions.</p>
+<p>The command transcript and challenge-specific solution are retained in private notes under HTB's publication rules.</p>
 </div>
 <aside class="lab-fact-panel">
 <h3>At a glance</h3>
@@ -63,21 +63,21 @@
 </section>
 
 <section class="band"><div class="shell lab-section" id="method">
-<div class="lab-section-header"><span class="eyebrow">02 / RESEARCH APPROACH</span><h2>Four habits that made the difference.</h2><p>The focus was on repeatable technical reasoning rather than one-off commands.</p></div>
+<div class="lab-section-header"><span class="eyebrow">02 / RESEARCH APPROACH</span><h2>Checks I kept returning to</h2><p>These were more useful than relying on a single successful-looking tool response.</p></div>
 <div class="lab-method-grid">
-<article class="lab-method-card"><span class="lab-count">01 — BASELINE</span><h3>Understand the scope</h3><p>Map the permitted environment and document the starting execution context before taking action.</p></article>
-<article class="lab-method-card"><span class="lab-count">02 — OBSERVE</span><h3>Capture evidence</h3><p>Record process identity, privilege levels, system configuration, and tool outputs as testable observations.</p></article>
-<article class="lab-method-card"><span class="lab-count">03 — VERIFY</span><h3>Challenge assumptions</h3><p>Distinguish an API's reported result from the security outcome it is supposed to demonstrate.</p></article>
-<article class="lab-method-card"><span class="lab-count">04 — DOCUMENT</span><h3>Preserve the chain</h3><p>Separate confirmed results from hypotheses and maintain clear notes for each completed objective.</p></article>
+<article class="lab-method-card"><span class="lab-count">01 — BASELINE</span><h3>Understand the scope</h3><p>Record the current identity, host, and privilege level before interpreting what a command can access.</p></article>
+<article class="lab-method-card"><span class="lab-count">02 — OBSERVE</span><h3>Capture evidence</h3><p>Compare process and token information with filesystem and event-log evidence.</p></article>
+<article class="lab-method-card"><span class="lab-count">03 — VERIFY</span><h3>Challenge assumptions</h3><p>Check the resulting system state, especially after an operation claims to have changed an account or service.</p></article>
+<article class="lab-method-card"><span class="lab-count">04 — DOCUMENT</span><h3>Preserve the chain</h3><p>Keep notes on failed attempts and identify existing sessions separately from ones I created in the shared lab.</p></article>
 </div></div></section>
 
 <section class="shell lab-section" id="takeaways">
-<div class="lab-section-header"><span class="eyebrow">03 / TECHNICAL DEVELOPMENT</span><h2>What this lab reinforced.</h2></div>
+<div class="lab-section-header"><span class="eyebrow">03 / TECHNICAL DEVELOPMENT</span><h2>Lessons from the difficult parts</h2></div>
 <div class="lab-learning">
 <article><h3>Context matters more than a username.</h3><p>Understanding the effective execution context, token privileges, and operating-system boundaries is essential to evaluating access accurately.</p></article>
 <article><h3>Success messages are not proof.</h3><p>A reported successful operation is a lead. Independent verification provides the evidence needed for a defensible conclusion.</p></article>
-<article><h3>Cross-platform systems increase complexity.</h3><p>Windows, Linux, identity services, and automation systems require a consistent method for assessing trust and operational boundaries.</p></article>
-<article><h3>Unexpected results are still findings.</h3><p>Failed attempts, inconsistent states, and diagnostic logs are valuable when their limitations are recorded clearly.</p></article>
+<article><h3>Check the installed configuration</h3><p>A default path in documentation was not present on the Linux host. Querying the installed tool's own configuration was more reliable than guessing another directory.</p></article>
+<article><h3>Distinguish shared-lab activity</h3><p>The command server was shared across operators. An existing elevated session is useful context, but it should not be described as an access level I independently obtained.</p></article>
 </div>
 </section>
 
@@ -91,7 +91,7 @@
 </section>
 
 <section class="section shell lab-reflection">
-<div><span class="eyebrow">04 / CLOSING NOTES</span><h2>Completed. Verified. Documented.</h2><p>This exercise strengthened my approach to multi-system investigation: preserve the original evidence, verify each security transition, and report uncertainty rather than conceal it. The result is a completed lab and an independently maintained technical record.</p></div>
+<div><span class="eyebrow">04 / CLOSING NOTES</span><h2>Final notes</h2><p>All four objectives were completed. The most useful parts of the record are the failed tests, privilege checks, and adjustments made after inspecting the actual host configuration.</p></div>
 <a class="btn secondary" href="GregoGaurd.html">← Back to GregoGuard research</a>
 </section>
 </main>
