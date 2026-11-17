@@ -24,13 +24,13 @@
 <div class="meta"><span>Motorola 68000 / Game ROM</span><span>Completed interview exercise</span><span>Third-party challenge</span></div>
 </section>
 <section class="section shell article">
-<div class="notice"><strong>Publication context.</strong> This article summarizes an independently completed technical interview exercise using original commentary. The challenge was provided by a third party; the exercise is not represented as my own product, a public vulnerability, or a commissioned professional engagement. Original company branding, challenge assets, flags, and step-by-step solution details have been omitted.</div>
+<div class="notice"><strong>Scope:</strong> I completed this as a technical interview exercise. I have omitted the original company's materials, challenge secrets, and step-by-step solution.</div>
 <h2>The problem</h2><p>The supplied binary behaved as a console ROM rather than a normal operating-system executable. Under emulation it presented a brief timer and limited controller interaction, leaving the intended output inaccessible through normal inputs.</p>
-<h2>Research methodology</h2><ol class="study-steps"><li>Determined the file’s execution environment and used an emulator to establish baseline behavior.</li><li>Used Ghidra to navigate ROM strings, routines, and Motorola 68000 control flow.</li><li>Studied the timer and display pathways and tested a local modification to understand how alternative execution paths affect the output.</li></ol>
-<h2>Tools &amp; techniques</h2><div class="chips"><span>Ghidra</span><span>Sega Genesis emulator</span><span>CyberChef</span><span>Linux</span></div>
+<h2>How I approached it</h2><ol class="study-steps"><li>Determined the file’s execution environment and used an emulator to establish baseline behavior.</li><li>Used Ghidra to navigate ROM strings, routines, and Motorola 68000 control flow.</li><li>Studied the timer and display pathways and tested a local modification to understand how alternative execution paths affect the output.</li></ol>
+<h2>Tools and techniques</h2><div class="chips"><span>Ghidra</span><span>Sega Genesis emulator</span><span>CyberChef</span><span>Linux</span></div>
 <h2>Result</h2><p>A modified local copy revealed the intended result in the emulator. The original document describes a successful demonstration, not a vulnerability in a production game.</p>
-<h2>What I practiced</h2><p>Architecture-aware binary analysis, emulation, control-flow mapping, and disciplined testing of a modified sample.</p>
-<div class="notice">A summary of a completed controlled assessment, not a disclosure of a third-party vulnerability. Results refer only to the exercise materials described.</div>
+<h2>What I learned</h2><p>The important first step was recognizing the target architecture and running the ROM in the correct emulator. That made it possible to follow the timer and display code rather than treating the file as an ordinary executable.</p>
+
 <div class="actions"><a class="btn secondary" href="../portfolio.html">View other projects →</a><a class="btn secondary" href="../GregoGaurd.html">Explore GregoGuard →</a></div>
 </section>
 </main>
