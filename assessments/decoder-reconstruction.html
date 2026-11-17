@@ -24,13 +24,13 @@
 <div class="meta"><span>Linux Binary Analysis / C</span><span>Completed interview exercise</span><span>Third-party challenge</span></div>
 </section>
 <section class="section shell article">
-<div class="notice"><strong>Publication context.</strong> This article summarizes an independently completed technical interview exercise using original commentary. The challenge was provided by a third party; the exercise is not represented as my own product, a public vulnerability, or a commissioned professional engagement. Original company branding, challenge assets, flags, and step-by-step solution details have been omitted.</div>
+<div class="notice"><strong>Scope:</strong> I completed this as a technical interview exercise. I have omitted the original company's materials, challenge secrets, and step-by-step solution.</div>
 <h2>The problem</h2><p>The assessment supplied binary artifacts and a decoder behavior to recover. Initial execution tracing gave partial insight but did not provide a complete, reusable decoding algorithm.</p>
-<h2>Research methodology</h2><ol class="study-steps"><li>Inspected the artifacts and experimented with Unicorn Engine to understand how the decoding logic ran.</li><li>Used binary inspection and Ghidra pseudocode to identify data transformations and control flow.</li><li>Translated the observed algorithm into C, fixed early runtime errors, and reran tests against the provided data.</li></ol>
-<h2>Tools &amp; techniques</h2><div class="chips"><span>Unicorn Engine</span><span>CyberChef</span><span>Ghidra</span><span>C</span><span>Linux</span></div>
+<h2>How I approached it</h2><ol class="study-steps"><li>Inspected the artifacts and experimented with Unicorn Engine to understand how the decoding logic ran.</li><li>Used binary inspection and Ghidra pseudocode to identify data transformations and control flow.</li><li>Translated the observed algorithm into C, fixed early runtime errors, and reran tests against the provided data.</li></ol>
+<h2>Tools and techniques</h2><div class="chips"><span>Unicorn Engine</span><span>CyberChef</span><span>Ghidra</span><span>C</span><span>Linux</span></div>
 <h2>Result</h2><p>The reconstructed C program successfully decoded the intended challenge output. The result was a working local reproduction of program behavior, not a newly discovered security vulnerability.</p>
-<h2>What I practiced</h2><p>Emulation, decompilation, C reconstruction, iterative debugging, and validation of reverse-engineered logic.</p>
-<div class="notice">A summary of a completed controlled assessment, not a disclosure of a third-party vulnerability. Results refer only to the exercise materials described.</div>
+<h2>What I learned</h2><p>The first C translation needed debugging. Comparing intermediate values with the observed binary behavior was more useful than continuing to rewrite the entire decoder from scratch.</p>
+
 <div class="actions"><a class="btn secondary" href="../portfolio.html">View other projects →</a><a class="btn secondary" href="../GregoGaurd.html">Explore GregoGuard →</a></div>
 </section>
 </main>
