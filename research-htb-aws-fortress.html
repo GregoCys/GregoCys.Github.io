@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="GregoCys AWS Fortress research case study: a ten-objective Hack The Box training environment spanning web, identity, software, and cloud security. Spoiler-free technical reflections.">
+<meta name="theme-color" content="#0b1220">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS Fortress — Trust Boundaries Under Pressure | GregoCys">
+<meta property="og:description" content="Ten objectives, several technology domains, and one evidence-led method. A spoiler-free GregoGuard case study.">
+<link rel="canonical" href="https://gregocys.com/research-htb-aws-fortress.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>AWS Fortress — Trust Boundaries Under Pressure | GregoCys</title>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/aws-fortress.css">
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header"><div class="shell navwrap">
+<a href="index.html" class="wordmark" aria-label="GregoCys home"><span class="mark">◈</span> Grego<span>Cys</span></a>
+<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Toggle navigation">☰</button>
+<nav id="mainnav" class="navlinks" aria-label="Primary navigation">
+<a href="index.html">Home</a><a href="about.html">About</a><a href="skills.html">Experience &amp; Skills</a><a href="certifications.html">Certifications</a><a href="portfolio.html">Projects</a><a href="GregoGaurd.html" class="active" aria-current="page">GregoGuard Research</a>
+</nav></div></header>
+<main id="main-content">
+<section class="fortress-hero"><div class="shell fortress-hero-grid">
+<div>
+<nav class="fortress-crumb" aria-label="Breadcrumb"><a href="GregoGaurd.html">GregoGuard Research</a><span aria-hidden="true">/</span><span>Case study 05</span></nav>
+<span class="eyebrow">HACK THE BOX / FORTRESS / RESEARCH NOTES</span>
+<h1>AWS Fortress.<br><span class="accent">Trust boundaries under pressure.</span></h1>
+<p class="lead">A ten-objective security training environment spanning application design, operating-system security, enterprise identity, and cloud infrastructure. This case study focuses on investigative method and defensive lessons—not challenge solutions.</p>
+<div class="meta"><span>November 2026</span><span>Multi-system lab</span><span>Web · Identity · Cloud</span><span>Spoiler-free</span></div>
+<div class="actions"><a class="btn primary" href="#overview">Explore the case study <span aria-hidden="true">↓</span></a><a class="btn secondary" href="GregoGaurd.html">All research</a></div>
+</div>
+<aside class="fortress-display" aria-label="Research scope diagram">
+<div class="fortress-display-top"><span>GREGO / RESEARCH MAP</span><span>HTB FORTRESS</span></div>
+<div class="fortress-emblem" aria-hidden="true">
+<div class="fortress-rings"><span class="fortress-center">F</span></div>
+</div>
+<div class="fortress-domains" aria-label="Four security research domains">
+<span>WEB</span><span>SYSTEMS</span><span>IDENTITY</span><span>CLOUD</span>
+</div>
+<div class="fortress-display-bottom"><strong>10 OBJECTIVES</strong><span>RESEARCH ARCHIVE</span></div>
+</aside>
+</div></section>
+
+<section class="section shell fortress-overview" id="overview">
+<div><span class="eyebrow">01 / EXECUTIVE OVERVIEW</span>
+<h2>One environment. Multiple layers of trust.</h2>
+<p>The supplied GregoGuard research package documents ten AWS Fortress objectives. Rather than treat each as an isolated exercise, the notes examine the relationships between applications, host systems, identities, and cloud services.</p>
+<p>The most important lesson is methodological: an investigation becomes stronger when observations are tied to the system that produced them, privilege changes are verified, and a lab's actual behavior is kept separate from expectations established by historical documentation.</p>
+<p>The full working notes contain environment-specific details and procedures. They are maintained privately, while this public summary preserves the overarching research conclusions.</p></div>
+<aside class="fortress-facts"><h3>Study profile</h3><dl>
+<div><dt>Platform</dt><dd>Hack The Box</dd></div>
+<div><dt>Environment</dt><dd>AWS Fortress</dd></div>
+<div><dt>Scope</dt><dd>10 objectives</dd></div>
+<div><dt>Research focus</dt><dd>Cross-system security</dd></div>
+<div><dt>Documented</dt><dd><time datetime="2026-11-17">17 Nov 2026</time></dd></div>
+<div><dt>Public format</dt><dd>Spoiler-free</dd></div>
+</dl></aside>
+</section>
+
+<section class="band"><div class="shell fortress-section" id="domains">
+<div class="fortress-section-heading"><span class="eyebrow">02 / KNOWLEDGE AREAS</span><h2>Four connected perspectives.</h2><p>A useful enterprise assessment considers the whole environment rather than evaluating security controls in isolation.</p></div>
+<div class="fortress-cards">
+<article class="fortress-card"><span class="fortress-card-num">01 / APPLICATIONS</span><h3>Application boundaries</h3><p>Examine how user-supplied data, authentication state, and application logic interact. Assess whether controls enforce the expected separation between users and services.</p></article>
+<article class="fortress-card"><span class="fortress-card-num">02 / SYSTEMS</span><h3>Host and software security</h3><p>Study execution context, trust in packaged software, and the distinction between an observed behavior and an assumed outcome.</p></article>
+<article class="fortress-card"><span class="fortress-card-num">03 / IDENTITY</span><h3>Enterprise authentication</h3><p>Evaluate how credentials, delegated access, and privilege boundaries influence the security of interconnected systems.</p></article>
+<article class="fortress-card"><span class="fortress-card-num">04 / CLOUD</span><h3>Cloud authorization</h3><p>Consider how workload identities, permissions, and sensitive data exposure affect the security of a larger environment.</p></article>
+</div></div></section>
+
+<section class="shell fortress-section" id="method">
+<div class="fortress-section-heading"><span class="eyebrow">03 / INVESTIGATION METHOD</span><h2>Make each claim verifiable.</h2><p>The accompanying technical record distinguishes direct lab observations from reference-assisted reconstruction.</p></div>
+<div class="fortress-method">
+<div><span>01</span><h3>Establish a baseline</h3><p>Document the authorized scope, environment, starting conditions, and expected behavior.</p></div>
+<div><span>02</span><h3>Collect reproducible evidence</h3><p>Preserve relevant responses, software properties, system identities, and contextual metadata.</p></div>
+<div><span>03</span><h3>Validate transitions</h3><p>Confirm outcomes independently; a tool reporting success is not, by itself, proof of the intended security result.</p></div>
+<div><span>04</span><h3>Report limitations</h3><p>Explain missing evidence and environmental differences rather than forcing observations to match a prior guide.</p></div>
+</div>
+</section>
+
+<section class="band"><div class="shell fortress-section" id="takeaways">
+<div class="fortress-section-heading"><span class="eyebrow">04 / DEFENSIVE TAKEAWAYS</span><h2>Reduce the space between systems and assumptions.</h2></div>
+<div class="fortress-priorities">
+<div><h3>Verify authorization at each boundary</h3><p>Application and service permissions should be evaluated at the level of the specific resource and action, not inferred from authentication alone.</p></div>
+<div><h3>Protect identities across platforms</h3><p>Credential handling, privilege separation, and workload access require coordinated controls wherever systems interact.</p></div>
+<div><h3>Treat packaged software and data as security inputs</h3><p>Software artifacts, configuration, and stored records deserve review for unexpected exposures and excessive trust.</p></div>
+<div><h3>Prioritize evidence quality</h3><p>Distinguish a reproduced result from a historically documented possibility. The distinction improves both technical accuracy and the usefulness of a report.</p></div>
+</div>
+</div></section>
+
+<section class="section shell" id="evidence">
+<div class="fortress-research-note"><span class="eyebrow">RESEARCH INTEGRITY</span><h2>Observed results versus historical references.</h2>
+<p>The source material records a meaningful difference between the live lab environment and an older published reference: some expected cloud records were unavailable during live checks. The private notes document that gap explicitly rather than asserting that every historical step was reproduced.</p>
+<p>That distinction informs this public case study. It summarizes the research themes without representing every reference-derived procedure as independently observed.</p>
+</div>
+</section>
+
+<section class="shell fortress-section" id="publication">
+<div class="fortress-policy"><span class="eyebrow">PUBLICATION POLICY</span><h2>A case study, not a solution release.</h2><p>Hack The Box's current public-write-up rules limit which content may have solutions published. AWS Fortress is not identified as an approved publication exception in the reviewed guidelines. Accordingly, the detailed ten-objective walkthrough, challenge-specific procedures, credentials, and proof values are not hosted here.</p>
+<p>See <a href="https://help.hackthebox.com/en/articles/12325897-hack-the-box-platform-rules" target="_blank" rel="noopener noreferrer">HTB Platform Rules</a> and <a href="https://help.hackthebox.com/en/articles/5188925-streaming-writeups-walkthrough-guidelines" target="_blank" rel="noopener noreferrer">Streaming and Write-up Guidelines</a>.</p></div>
+</section>
+
+<section class="section shell fortress-next"><div><span class="eyebrow">MORE GREGO GUARD RESEARCH</span><h2>Evidence first. Conclusions second.</h2><p>Browse the other research case studies, reverse-engineering exercises, and controlled security investigations.</p></div><a class="btn secondary" href="GregoGaurd.html">Explore GregoGuard <span aria-hidden="true">→</span></a></section>
+</main>
+<footer class="site-footer"><div class="shell foot-inner"><div><strong>GregoCys</strong> <span class="sep">/</span> Cybersecurity • Research • Engineering<br><small>© <span id="year">2026</span> GregoCys. Independent portfolio and educational research.</small></div><div class="footerlinks"><a href="mailto:BrandonScott@GregoCys.com">Email</a><a href="https://www.linkedin.com/in/brandon-gregory-129935263/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="GregoGaurd.html">GregoGuard</a></div></div></footer>
+<script src="assets/site.js" defer></script>
+</body></html>

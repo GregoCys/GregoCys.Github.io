@@ -1,0 +1,59 @@
+/* AWS Fortress: GregoGuard public case study */
+.fortress-hero{padding:86px 0 74px;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 50% 90% at 83% 29%,#1b567248,transparent 72%),radial-gradient(ellipse 60% 90% at 5% 100%,#174d5530,transparent 76%),var(--bg)}
+.fortress-hero-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(330px,.8fr);gap:52px;align-items:center}
+.fortress-hero h1{font-size:clamp(43px,5.2vw,67px);max-width:780px;margin-bottom:24px}
+.fortress-hero .lead{max-width:710px;margin:0}
+.fortress-hero .meta{margin-top:26px}
+.fortress-hero .actions{margin-bottom:0}
+.fortress-crumb{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:26px;font:600 12px 'DM Sans',sans-serif;color:#94b4c4}
+.fortress-crumb a{color:var(--cyan)}
+.fortress-display{border:1px solid #34566c;border-radius:18px;padding:23px;background:linear-gradient(150deg,#183349,#0a1522 78%);box-shadow:0 30px 80px #01050c85;min-width:0}
+.fortress-display-top,.fortress-display-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 10px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.08em;color:#a9c2d1}
+.fortress-display-top{padding-bottom:17px;border-bottom:1px solid #30495b}
+.fortress-display-bottom{padding-top:19px;border-top:1px solid #30495b}
+.fortress-display-bottom strong{color:var(--cyan)}
+.fortress-emblem{display:grid;place-items:center;padding:37px 0 25px;min-height:208px}
+.fortress-rings{height:182px;width:182px;border:1px dashed #3f8093;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 0 26px #16435a22,0 0 0 52px #16435a0c;position:relative}
+.fortress-rings:before,.fortress-rings:after{content:"";position:absolute;inset:19px;border:1px solid #2d6f7c;border-radius:50%}
+.fortress-rings:after{inset:37px;border-style:dashed;border-color:#459999}
+.fortress-center{font:700 69px 'Space Grotesk',sans-serif;color:#72e6d4;text-shadow:0 0 40px #56dfd866;line-height:1}
+.fortress-domains{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:6px 0 23px}
+.fortress-domains span{text-align:center;padding:8px 4px;background:#162b3c;border:1px solid #375769;border-radius:6px;font:700 10px ui-monospace,Consolas,monospace;color:#ccf2f1}
+.fortress-overview{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(280px,.7fr);gap:50px;align-items:start}
+.fortress-overview p{color:#c0ccda;max-width:800px;line-height:1.85}
+.fortress-facts{border:1px solid var(--line);background:#111f31;border-radius:14px;padding:25px}
+.fortress-facts h3{font-size:18px;margin:0 0 12px}
+.fortress-facts dl{margin:0}
+.fortress-facts dl>div{padding:12px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;font-size:13px}
+.fortress-facts dt{color:var(--muted)}
+.fortress-facts dd{margin:0;text-align:right;color:#e5f8f8;font-weight:700}
+.fortress-section{padding-top:72px;padding-bottom:76px}
+.fortress-section-heading{max-width:780px;margin-bottom:31px}
+.fortress-section-heading p{color:var(--muted)}
+.fortress-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.fortress-card{border:1px solid #2c4356;background:linear-gradient(155deg,#172a3e,#101d30);border-radius:13px;padding:26px 22px;min-width:0}
+.fortress-card-num{display:inline-block;margin-bottom:16px;font:700 11px ui-monospace,Consolas,monospace;color:var(--cyan)}
+.fortress-card h3{font-size:20px;margin:0 0 12px}
+.fortress-card p{margin:0;font-size:14px;line-height:1.8;color:#aebfd1}
+.fortress-method{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:19px}
+.fortress-method>div{border-top:2px solid var(--cyan);padding:20px 6px 0}
+.fortress-method span{font:700 12px ui-monospace,Consolas,monospace;color:var(--cyan)}
+.fortress-method h3{font-size:18px}
+.fortress-method p{font-size:14px;color:var(--muted)}
+.fortress-priorities{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.fortress-priorities>div{padding:23px 24px;background:#121f32;border:1px solid #314b5e;border-radius:12px}
+.fortress-priorities h3{font-size:19px;margin:0 0 10px}
+.fortress-priorities p{margin:0;color:var(--muted);font-size:14px}
+.fortress-research-note{border-left:3px solid var(--cyan);padding:5px 0 8px 24px;max-width:930px}
+.fortress-research-note h2{font-size:clamp(25px,3vw,36px)}
+.fortress-research-note p{color:#c0ccda;line-height:1.85}
+.fortress-policy{padding:32px 36px;border:1px solid #335667;border-radius:16px;background:linear-gradient(115deg,#132c3e,#101d2e)}
+.fortress-policy h2{font-size:clamp(25px,3vw,34px)}
+.fortress-policy p{max-width:940px;color:#b8cedd;line-height:1.85}
+.fortress-policy a{color:var(--cyan);text-decoration:underline;text-underline-offset:3px}
+.fortress-next{display:grid;grid-template-columns:1fr auto;gap:35px;align-items:center}
+.fortress-next p{color:var(--muted);max-width:780px}
+@media(max-width:1040px){.fortress-hero-grid,.fortress-overview{grid-template-columns:1fr}.fortress-display{max-width:500px}.fortress-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.fortress-hero{padding:55px 0}.fortress-section{padding-top:50px;padding-bottom:55px}.fortress-method,.fortress-priorities,.fortress-next{grid-template-columns:1fr}.fortress-overview{gap:22px}.fortress-display{max-width:100%}}
+@media(max-width:500px){.fortress-cards{grid-template-columns:1fr}.fortress-display{padding:19px}.fortress-domains{grid-template-columns:repeat(2,minmax(0,1fr))}.fortress-policy{padding:24px}.fortress-facts{padding:22px}}
+@media(prefers-reduced-motion:reduce){.fortress-hero *{transition:none!important}}
