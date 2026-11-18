@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="An evidence-led review of a multi-system enterprise training lab. Completed objectives, lessons in validating trust boundaries, and defensive takeaways—without active-machine spoilers.">
+<meta property="og:type" content="article"><meta property="og:title" content="Hack The Box RedEye — Enterprise Security Lab | GregoGuard">
+<meta property="og:description" content="An evidence-led review of a multi-system enterprise training lab. Completed objectives, lessons in validating trust boundaries, and defensive takeaways—without active-machine spoilers.">
+<meta name="author" content="GregoGuard">
+<meta property="og:url" content="https://gregocys.com/research-htb-redeye.html">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://gregocys.com/research-htb-redeye.html">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="assets/site.css">
+<title>RedEye — Enterprise Security Lab Case Study | GregoGuard</title>
+<style>
+.gg-case-intro{max-width:900px}
+.gg-article-layout{display:grid;grid-template-columns:215px minmax(0,1fr);gap:42px;align-items:start}
+.gg-toc{border:1px solid var(--line,#31445a);background:var(--bg2,#0e1a2a);border-radius:12px;padding:20px;position:sticky;top:100px;max-height:calc(100vh - 120px);overflow:auto}
+.gg-toc strong{display:block;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--cyan,#52c5d8);margin-bottom:13px}
+.gg-toc a{display:block;font-size:12px;line-height:1.55;padding:6px 0;color:var(--muted,#adbac9);text-decoration:none}
+.gg-toc a:hover{color:var(--cyan,#52c5d8)}
+.gg-content{max-width:none;min-width:0;padding-top:0}
+.gg-content h2{scroll-margin-top:100px;font-size:29px;margin:48px 0 16px;padding-bottom:13px;border-bottom:1px solid var(--line,#31445a)}
+.gg-content h3{scroll-margin-top:100px;font-size:20px;margin:26px 0 12px;color:#f4f7fc}
+.gg-content p,.gg-content li{color:#c7d3e1;line-height:1.83}
+.gg-content p{margin:15px 0}.gg-content strong{color:#eef6fc}
+.gg-content ul,.gg-content ol{padding-left:27px}.gg-content li{margin:7px 0}
+.gg-content code{font-family:ui-monospace,Consolas,Monaco,monospace;font-size:.9em;color:#8fe4d7;overflow-wrap:anywhere}
+.gg-content pre{background:#0b1421;border:1px solid #33475d;border-radius:12px;padding:17px 20px;overflow:auto;margin:20px 0 25px}
+.gg-content pre code{font-size:12.2px;color:#d3e6f7;line-height:1.7;white-space:pre;overflow-wrap:normal}
+.gg-content blockquote{margin:18px 0 28px;padding:15px 22px;border-left:3px solid var(--cyan,#52c5d8);background:#142638;border-radius:0 9px 9px 0}
+.gg-content blockquote p{margin:0;color:#d4e2ef}
+.gg-content table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;margin:18px 0 26px;font-size:13px}
+.gg-content th,.gg-content td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line,#31445a);vertical-align:top}
+.gg-content th{background:#17283b;color:var(--cyan,#52c5d8);font-weight:700;white-space:nowrap}
+.gg-content hr{border:0;border-top:1px solid var(--line,#31445a);margin:40px 0}
+.gg-content a{color:var(--cyan,#52c5d8);text-decoration:underline;text-underline-offset:3px}
+.gg-article-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:25px}
+.gg-article-meta span{border:1px solid var(--line,#31445a);border-radius:30px;padding:5px 11px;color:#c1ccda;font-size:11px;font-weight:700}
+.gg-method-ribbon{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.gg-method-ribbon span{font-size:12px;color:var(--cyan,#52c5d8);background:#163141;border:1px solid #2a5566;border-radius:7px;padding:8px 12px}
+.gg-article-end{margin:46px 0 25px;padding:23px 25px;background:#142638;border:1px solid #2a4e60;border-radius:11px;color:#d2e4ed}
+@media(max-width:970px){.gg-article-layout{grid-template-columns:1fr}.gg-toc{position:static;max-height:none;display:flex;gap:15px;flex-wrap:wrap}.gg-toc strong{width:100%;margin:0}.gg-toc a{display:inline-block;padding:4px}}
+@media(max-width:520px){.gg-content pre{padding:12px}.gg-content h2{font-size:24px}.gg-content pre code{font-size:11px}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<header class="site-header"><div class="shell navwrap"><a href="index.html" class="wordmark" aria-label="GregoCys home"><span class="mark">◈</span> Grego<span>Cys</span></a><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mainnav" aria-label="Toggle navigation">☰</button><nav id="mainnav" class="navlinks" aria-label="Primary navigation"><a href="index.html">Home</a><a href="about.html">About</a><a href="skills.html">Experience &amp; Skills</a><a href="certifications.html">Certifications</a><a href="portfolio.html">Projects</a><a href="GregoGaurd.html" class="active" aria-current="page">GregoGuard Research</a></nav></div></header>
+<main id="main-content"><section class="page-hero shell"><div class="gg-case-intro">
+<a class="back" href="GregoGaurd.html">← GregoGuard research</a>
+<span class="eyebrow">GREGO GUARD / HACK THE BOX / ENTERPRISE LAB / COMPLETED</span>
+<h1>Hack The Box RedEye — Enterprise Security Research</h1>
+<p class="lead">An evidence-led review of a multi-system enterprise training lab. Completed objectives, lessons in validating trust boundaries, and defensive takeaways—without active-machine spoilers.</p>
+<div class="gg-article-meta"><span>Windows &amp; Linux</span><span>Active Directory</span><span>Completed · Spoiler-free</span><span>18 Nov 2026</span></div>
+<div class="gg-method-ribbon"><span>Evidence validation</span><span>Trust boundaries</span><span>Technical reporting</span></div>
+<div class="actions"><a class="btn secondary" href="GregoGaurd.html">All case studies</a></div>
+</div></section>
+<section class="section shell gg-article-layout">
+<aside class="gg-toc" aria-label="Table of contents"><strong>Contents</strong><a href="#overview">Overview</a><a href="#investigation-methodology">Investigation methodology</a><a href="#what-made-the-investigation-challenging">What made the investigation challenging</a><a href="#tools-and-techniques-practiced">Tools and techniques practiced</a><a href="#defensive-observations">Defensive observations</a><a href="#conclusion">Conclusion</a><a href="#references">References</a></aside>
+<article class="gg-content article"><p><strong>GregoGuard Research · 18 November 2026 · Hack The Box · Completed · Spoiler-free</strong></p>
+<blockquote>
+<p><strong>Publication note:</strong> RedEye was an active seasonal Hack The Box machine when this article was prepared. This public edition intentionally excludes the exploit chain, account names, credentials, host-specific attack procedures, and objective contents. The complete walkthrough remains private until the machine is officially retired and publication is permitted.</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>RedEye is a layered security exercise that required understanding how application services, operating-system processes, network boundaries, and enterprise authentication interact. I completed both objectives during an authorized Hack The Box session and retained the command outputs that established each important transition.</p>
+<p>The most valuable lesson was not a single exploit. It was the discipline of validating the difference between <strong>being able to reach a service</strong>, <strong>authenticating to it</strong>, <strong>holding an appropriate privilege</strong>, and <strong>demonstrating the intended result</strong>. Those are four different claims, and each requires its own evidence.</p>
+<h2 id="investigation-methodology">Investigation methodology</h2>
+<h3 id="establish-the-environment-before-testing-assumptions">Establish the environment before testing assumptions</h3>
+<p>The first stage was service discovery and host-role mapping. A segmented lab can expose one application at its edge while keeping other services on internal hosts. I recorded the role of each reachable system, its advertised service, and the identity under which any subsequent test would execute.</p>
+<pre><code class="language-bash"># Generic, read-only examples; replace values within your authorized scope.
+nmap -Pn -sT -sV --open &lt;AUTHORIZED_HOST&gt;
+getent hosts &lt;INTERNAL_NAME&gt;
+date -u '+%Y-%m-%d %H:%M:%S UTC'
+</code></pre>
+<h3 id="verify-execution-context-and-permissions">Verify execution context and permissions</h3>
+<p>A successful network request does not automatically grant access to files, services, or administrator operations. I kept account-level and process-level evidence separate from tool banners. This became especially important when a command appeared to succeed but the expected application state had not changed.</p>
+<pre><code class="language-bash"># Examples of local evidence collection in an authorized session.
+whoami
+id
+ss -lnt
+</code></pre>
+<h3 id="validate-outcomes-independently">Validate outcomes independently</h3>
+<p>For every substantial step, I looked for a second observation: a confirmed account role rather than a completed registration request; a successful authentication rather than a transport connection; explicit share permissions rather than a login banner; and a valid authentication ticket rather than an issued certificate alone.</p>
+<p>An apparent success message is a lead, not a conclusion.</p>
+<h2 id="what-made-the-investigation-challenging">What made the investigation challenging</h2>
+<h3 id="multiple-systems-multiple-meanings-of-access">Multiple systems, multiple meanings of “access”</h3>
+<p>Several components were reachable through different network paths. Understanding which host initiated a connection and which account performed an action prevented false conclusions. I treated forwarded addresses, local loopback names, and authentication identities as separate attributes.</p>
+<h3 id="protocol-behavior-mattered">Protocol behavior mattered</h3>
+<p>A correctly formatted request can still be sent to the wrong application handler. Inspecting the installed software version and identifying the actual receiving code was more reliable than repeating payloads that only demonstrated a successful socket write.</p>
+<h3 id="identity-controls-are-context-dependent">Identity controls are context dependent</h3>
+<p>Authentication failures can indicate an incorrect password, an account requirement, a policy restriction, or time synchronization. The precise error code changed how I investigated the problem. In this exercise, distinguishing those cases saved substantial effort.</p>
+<h3 id="timing-can-be-a-security-dependency">Timing can be a security dependency</h3>
+<p>Some enterprise authentication protocols use narrow clock-skew windows. Correcting measured time drift for a single process is preferable to repeatedly regenerating unrelated artifacts or changing a system-wide clock without a reason.</p>
+<h2 id="tools-and-techniques-practiced">Tools and techniques practiced</h2>
+<table>
+<thead>
+<tr>
+  <th>Area</th>
+  <th>Tools used</th>
+  <th>Learning objective</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Discovery</td>
+  <td>Nmap, DNS queries, curl</td>
+  <td>Map reachable services and trust boundaries</td>
+</tr>
+<tr>
+  <td>Linux investigation</td>
+  <td>Shell, Python, systemd tooling</td>
+  <td>Verify process identity and service behavior</td>
+</tr>
+<tr>
+  <td>Network access</td>
+  <td>Chisel, ProxyChains</td>
+  <td>Understand segmented network paths</td>
+</tr>
+<tr>
+  <td>API analysis</td>
+  <td>Rocket.Chat REST API, jq</td>
+  <td>Distinguish API access and application permissions</td>
+</tr>
+<tr>
+  <td>Windows assessment</td>
+  <td>NetExec, PowerShell, RDP</td>
+  <td>Validate domain authentication and host-level authorization</td>
+</tr>
+<tr>
+  <td>Enterprise identity</td>
+  <td>LDAP tools, Certipy</td>
+  <td>Interpret certificate and authentication evidence</td>
+</tr>
+<tr>
+  <td>Evidence review</td>
+  <td>Logs, timestamps, saved terminal output</td>
+  <td>Build a reproducible timeline</td>
+</tr>
+</tbody>
+</table>
+<p>The tool names describe the scope of study, not the steps of the solution. The operational procedures and machine-specific findings are retained in the private report.</p>
+<h2 id="defensive-observations">Defensive observations</h2>
+<p>The investigation reinforced several defensive themes relevant outside the lab. Untrusted content should be processed with restrictive capabilities and a minimal operating-system identity. Internal messaging systems need real authorization even when reachable only over loopback or a trusted network. Sensitive credentials should not be retained in broad chat histories. Automatic authentication from link preview workers deserves isolation and monitoring. Enterprise certificate issuance is security-critical configuration, and its policy files and identity mappings require strict access controls.</p>
+<p>None of those controls is effective if a successful-looking log line is used as a substitute for verifying the resulting privilege or state. Cross-service correlation and accurate timestamps remain essential to reconstructing a chained incident.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Both RedEye objectives were completed. My working record captures the confirmed access changes, relevant error conditions, and the final authorization checks, while withholding solution details during the machine's active period.</p>
+<p>The key technical takeaway is <strong>evidence discipline across trust boundaries</strong>: validate not only what a tool requested, but which process handled it, which identity was evaluated, and what the system actually allowed.</p>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://help.hackthebox.com/en/articles/5188925-streaming-writeups-walkthrough-guidelines">Hack The Box publication guidelines</a></li>
+<li><a href="https://help.hackthebox.com/en/articles/12325897-hack-the-box-platform-rules">Hack The Box platform rules</a></li>
+<li><a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a></li>
+</ul>
+<div class="gg-article-end"><strong>GregoGuard Research</strong><p>Recorded from an authorized Hack The Box session. All flags are withheld. This public entry contains no machine-specific solution steps.</p></div></article>
+</section></main>
+<footer class="site-footer"><div class="shell foot-inner"><div><strong>GregoCys</strong> <span class="sep">/</span> Cybersecurity • Research • Engineering<br><small>© <span id="year">2026</span> GregoCys. Independent portfolio and educational research.</small></div><div class="footerlinks"><a href="mailto:BrandonScott@GregoCys.com">Email</a><a href="https://www.linkedin.com/in/brandon-gregory-129935263/" target="_blank" rel="noopener noreferrer">LinkedIn</a><a href="GregoGaurd.html">GregoGuard</a></div></div></footer>
+<script src="assets/site.js" defer></script>
+</body></html>
